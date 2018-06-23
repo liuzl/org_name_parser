@@ -54,7 +54,8 @@ func main() {
 		line = strings.TrimSpace(line)
 		d := ling.NewDocument(line)
 		if err := nlp.Annotate(d); err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			continue
 		}
 		tokens := d.XRealTokens(ling.Norm)
 		for i := 1; i < len(tokens); i++ {
