@@ -17,8 +17,9 @@ import (
 )
 
 var (
-	k = flag.Int("n", 100, "k")
+	k = flag.Int("n", 10000, "k")
 	i = flag.String("i", "input.txt.gz", "input file")
+	o = flag.String("o", "output.txt", "output file")
 )
 
 var nlp = ling.MustNLP(ling.Norm)
@@ -54,7 +55,7 @@ func main() {
 		line = strings.TrimSpace(line)
 		d := ling.NewDocument(line)
 		if err := nlp.Annotate(d); err != nil {
-			log.Println(err)
+			log.Printf("%s, %+v\n", line, err)
 			continue
 		}
 		tokens := d.XRealTokens(ling.Norm)
@@ -65,7 +66,12 @@ func main() {
 	}
 	bar.FinishPrint("done!")
 	fmt.Println(len(tk.Keys()))
+	out, err := os.Create(*o)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer out.Close()
 	for _, v := range tk.Keys() {
-		fmt.Println(v.Key, v.Count, v.Error)
+		fmt.Fprintln(out, v.Key, v.Count, v.Error)
 	}
 }
