@@ -54,6 +54,8 @@ func main() {
 			break
 		}
 		line = strings.TrimSpace(line)
+		items := strings.Fields(line)
+		line = items[0]
 		d := ling.NewDocument(line)
 		if err := nlp.Annotate(d); err != nil {
 			log.Printf("%s, %+v\n", line, err)
