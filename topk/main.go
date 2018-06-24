@@ -45,7 +45,8 @@ func main() {
 	} else {
 		br = bufio.NewReader(f)
 	}
-	tk := topk.New(*k)
+	btk := topk.New(*k)
+	ftk := topk.New(*k)
 	bar := pb.StartNew(count)
 	for {
 		line, c := br.ReadString('\n')
@@ -60,13 +61,18 @@ func main() {
 		}
 		tokens := d.XRealTokens(ling.Norm)
 		for i := 1; i < len(tokens); i++ {
-			tk.Insert(strings.Join(tokens[i:], ""), 1)
+			btk.Insert(strings.Join(tokens[i:], ""), 1)
+			ftk.Insert(strings.Join(tokens[:i], ""), 1)
 		}
 		bar.Increment()
 	}
 	bar.FinishPrint("done!")
-	fmt.Println(len(tk.Keys()))
-	out, err := os.Create(*o)
+	output(ftk, *o+"_prefix")
+	output(btk, *o+"_suffix")
+}
+
+func output(tk *topk.Stream, file string) {
+	out, err := os.Create(file)
 	if err != nil {
 		log.Fatal(err)
 	}
