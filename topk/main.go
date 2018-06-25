@@ -19,7 +19,7 @@ import (
 var (
 	k = flag.Int("n", 10000, "k")
 	i = flag.String("i", "input.txt.gz", "input file")
-	o = flag.String("o", "output.txt", "output file")
+	o = flag.String("o", "output_%s.txt", "output file pattern")
 )
 
 var nlp = ling.MustNLP(ling.Norm)
@@ -69,8 +69,8 @@ func main() {
 		bar.Increment()
 	}
 	bar.FinishPrint("done!")
-	output(ftk, *o+"_prefix")
-	output(btk, *o+"_suffix")
+	output(ftk, fmt.Sprintf(*o, "prefix"))
+	output(btk, fmt.Sprintf(*o, "suffix"))
 }
 
 func output(tk *topk.Stream, file string) {
