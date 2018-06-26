@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/cheggaaa/pb"
@@ -19,6 +20,7 @@ import (
 var (
 	k = flag.Int("n", 10000, "k")
 	i = flag.String("i", "input.txt.gz", "input file")
+	c = flag.Bool("c", false, "use count flag")
 	o = flag.String("o", "output_%s.txt", "output file pattern")
 )
 
@@ -49,13 +51,21 @@ func main() {
 	ftk := topk.New(*k)
 	bar := pb.StartNew(count)
 	for {
-		line, c := br.ReadString('\n')
-		if c == io.EOF {
+		line, e := br.ReadString('\n')
+		if e == io.EOF {
 			break
 		}
 		line = strings.TrimSpace(line)
 		items := strings.Fields(line)
 		line = items[0]
+		cnt := 1
+		if *c {
+			if len(items) > 1 {
+				if n, err := strconv.Atoi(items[1]); err == nil {
+					cnt = n
+				}
+			}
+		}
 		d := ling.NewDocument(line)
 		if err := nlp.Annotate(d); err != nil {
 			log.Printf("%s, %+v\n", line, err)
@@ -63,8 +73,8 @@ func main() {
 		}
 		tokens := d.XRealTokens(ling.Norm)
 		for i := 1; i < len(tokens); i++ {
-			btk.Insert(strings.Join(tokens[i:], ""), 1)
-			ftk.Insert(strings.Join(tokens[:i], ""), 1)
+			btk.Insert(strings.Join(tokens[i:], ""), cnt)
+			ftk.Insert(strings.Join(tokens[:i], ""), cnt)
 		}
 		bar.Increment()
 	}
