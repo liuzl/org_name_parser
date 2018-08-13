@@ -1,0 +1,10 @@
+<company> = <location> (any) <company_type>                         {nf.company($1,$2,$3)}
+          | <location> (any) <company_scope> <company_type>         {nf.company($1,$2,$4,$3)}
+          | (any) "(" <location> ")" <company_type>                 {nf.company($3,$1,$5)}
+          | (any) <company_scope> "(" <location> ")" <company_type> {nf.company($4,$1,$6,$2)}
+          ;
+<location> = "北京"
+           | "天津"
+           | "上海"
+           ;
+
