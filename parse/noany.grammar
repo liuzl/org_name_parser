@@ -1,0 +1,10 @@
+<company> = <location> <name> <company_type>                         {nf.company($1,$2,$3)}
+          | <location> <name> <company_scope> <company_type>         {nf.company($1,$2,$4,$3)}
+          ;
+
+<location> = <loc_county>
+           ;
+
+<name> = "葡萄"
+       | "石"
+       ; 
