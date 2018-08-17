@@ -3,8 +3,11 @@
           | (any) "(" <location> ")" <company_type>                 {nf.company($3,$1,$5)}
           | (any) <company_scope> "(" <location> ")" <company_type> {nf.company($4,$1,$6,$2)}
           ;
-<location> = "北京"
-           | "天津"
-           | "上海"
-           ;
 
+<location> = <loc_county>
+           | <loc_city>
+           | <loc_province>
+           | <loc_province> <loc_city>
+           | <loc_province> <loc_county>
+           | <loc_city> <loc_county>
+           ;
