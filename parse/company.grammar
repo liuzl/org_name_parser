@@ -1,11 +1,11 @@
-<company> = <location> (any) <company_type>                         {nf.company($1,$2,$3)}
-          | <location> (any) <company_scope> <company_type>         {nf.company($1,$2,$4,$3)}
+<company> = <location> (any) <company_type>                 {nf.company($1,$2,$3)}
+          | <location> (any) <company_scope> <company_type> {nf.company($1,$2,$4,$3)}
           ;
 
-<location> = <loc_county>
-           | <loc_city>
-           | <loc_province>
-           | <loc_province> <loc_city>
-           | <loc_province> <loc_county>
-           | <loc_city> <loc_county>
+<location> = <loc_county>                {nf.loc($1)}
+           | <loc_city>                  {nf.loc($1)}
+           | <loc_province>              {nf.loc($1)}
+           | <loc_province> <loc_city>   {nf.loc_province_city($1, $2)}
+           | <loc_province> <loc_county> {nf.loc_province_county($1, $2)}
+           | <loc_city> <loc_county>     {nf.loc_city_county($1, $2)}
            ;
