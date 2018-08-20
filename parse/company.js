@@ -8,7 +8,7 @@ nf.list = function() {
     return arr;
 }
 
-nf.object = function(type, value) {
+nf.entity = function(type, value) {
     return {"type": type, "value": value};
 }
 
