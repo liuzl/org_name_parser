@@ -8,4 +8,5 @@
            | <loc_province> <loc_city>   {nf.list($1, $2)}
            | <loc_province> <loc_county> {nf.list($1, $2)}
            | <loc_city> <loc_county>     {nf.list($1, $2)}
+           | <loc_province> <loc_city> <loc_county> {nf.list($1, $2, $3)}
            ;
