@@ -23,20 +23,18 @@ var (
 )
 
 func main() {
-	defer func() {
-		if err := recover(); err != nil {
-			fmt.Println(err)
-		}
-	}()
+	/*
+		defer func() {
+			if err := recover(); err != nil {
+				fmt.Println(err)
+			}
+		}()
+	*/
 	flag.Parse()
-	b, err := ioutil.ReadFile(*grammar)
-	if err != nil {
-		glog.Fatal(err)
-	}
 	if *debug {
 		fmr.Debug = true
 	}
-	g, err := fmr.CFGrammar(string(b))
+	g, err := fmr.GrammarFromFile(*grammar)
 	if err != nil {
 		glog.Fatal(err)
 	}
