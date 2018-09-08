@@ -1,5 +1,5 @@
-<company> = <location> (any{2,6}) <company_type>                 {nf.company($0,$1,$2,$3)}
-          | <location> (any{2,6}) <company_scope> <company_type> {nf.company($0,$1,$2,$4,$3)}
+<company> = <location> (any{2,6}) <company_type>                 {nf.company($1,$2,$3)}
+          | <location> (any{2,6}) <company_scope> <company_type> {nf.company($1,$2,$4,$3)}
           ;
 
 <location> = <loc_county>                {nf.I($1)}
