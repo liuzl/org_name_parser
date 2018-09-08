@@ -18,7 +18,7 @@ import (
 var (
 	grammar    = flag.String("g", "company.grammar", "grammar file")
 	js         = flag.String("js", "company.js", "javascript file")
-	input      = flag.String("i", "company.txt", "file of original text to read")
+	input      = flag.String("i", "", "file of original text to read")
 	debug      = flag.Bool("debug", false, "debug mode")
 	start      = flag.String("start", "company", "start rule")
 	cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
@@ -80,6 +80,9 @@ func main() {
 		}
 		line = strings.TrimSpace(line)
 		fmt.Println(line)
+		if len(line) == 0 {
+			continue
+		}
 		p, err := g.EarleyParse(line, *start)
 		if err != nil {
 			glog.Fatal(err)
