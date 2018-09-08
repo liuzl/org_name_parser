@@ -1,2 +1,6 @@
 .ipynb_checkpoints
 topk/topk
+parse/parse
+zerolog
+dicts
+*.prof
