@@ -7,6 +7,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"runtime/pprof"
 	"strings"
 
 	"github.com/golang/glog"
@@ -15,11 +16,12 @@ import (
 )
 
 var (
-	grammar = flag.String("g", "company.grammar", "grammar file")
-	js      = flag.String("js", "company.js", "javascript file")
-	input   = flag.String("i", "company.txt", "file of original text to read")
-	debug   = flag.Bool("debug", false, "debug mode")
-	start   = flag.String("start", "company", "start rule")
+	grammar    = flag.String("g", "company.grammar", "grammar file")
+	js         = flag.String("js", "company.js", "javascript file")
+	input      = flag.String("i", "company.txt", "file of original text to read")
+	debug      = flag.Bool("debug", false, "debug mode")
+	start      = flag.String("start", "company", "start rule")
+	cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
 )
 
 func main() {
@@ -31,6 +33,15 @@ func main() {
 		}()
 	*/
 	flag.Parse()
+	if *cpuprofile != "" {
+		f, err := os.Create(*cpuprofile)
+		if err != nil {
+			glog.Fatal(err)
+		}
+		pprof.StartCPUProfile(f)
+		defer pprof.StopCPUProfile()
+	}
+
 	if *debug {
 		fmr.Debug = true
 	}
