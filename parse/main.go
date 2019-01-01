@@ -12,6 +12,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/liuzl/fmr"
+	"github.com/liuzl/goutil"
 	"github.com/robertkrimen/otto"
 )
 
@@ -48,6 +49,10 @@ func main() {
 	g, err := fmr.GrammarFromFile(*grammar)
 	if err != nil {
 		glog.Fatal(err)
+	}
+	if *debug {
+		b, _ := goutil.JSONMarshalIndent(g, "", "  ")
+		fmt.Println(string(b))
 	}
 	script, err := ioutil.ReadFile(*js)
 	if err != nil {

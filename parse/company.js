@@ -1,11 +1,8 @@
 var nf = nf || {};
+var fmr = fmr || {};
 
-nf.list = function() {
-    var arr = [];
-    for (var i = 0; i < arguments.length; i++) {
-        arr.push(arguments[i]);
-    }
-    return arr;
+fmr.list = function() {
+    return arguments;
 }
 
 nf.entity = function(type, value) {
