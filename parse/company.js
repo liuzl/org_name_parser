@@ -2,7 +2,10 @@ var nf = nf || {};
 var fmr = fmr || {};
 
 fmr.list = function() {
-    return arguments;
+    //console.log(JSON.stringify(arguments));
+    var arr = Array.prototype.slice.call(arguments);
+    //console.log(JSON.stringify(arr));
+    return arr;
 }
 
 nf.entity = function(type, value) {
