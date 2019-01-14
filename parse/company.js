@@ -8,9 +8,7 @@ fmr.list = function() {
     return arr;
 }
 
-nf.entity = function(type, value) {
-    return {"type": type, "value": value};
-}
+fmr.entity = fmr.list;
 
 nf.company = function(loc, name, type, scope) {
     return {"loc":loc, "name":name, "type":type, "scope":scope};
